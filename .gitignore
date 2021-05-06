@@ -1,6 +1,8 @@
 # IntelliJ IDEA
 *.iml
-.idea/
+.idea
+target
+build
 
 # Maven
 target/
