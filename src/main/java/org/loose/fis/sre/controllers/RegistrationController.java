@@ -6,16 +6,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import org.loose.fis.sre.exceptions.NoUpperCaseException;
-import org.loose.fis.sre.exceptions.UncompletedFieldsException;
 import org.loose.fis.sre.services.UserService;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
 import org.loose.fis.sre.exceptions.UsernameAlreadyExistsException;
-
-import static org.loose.fis.sre.services.UserService.UpperCaseExists;
 
 public class RegistrationController {
 
