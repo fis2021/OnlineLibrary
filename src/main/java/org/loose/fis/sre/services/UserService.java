@@ -29,7 +29,7 @@ public class UserService {
         userRepository = database.getRepository(User.class);
     }
 
-    public static void addUser(String username,String password,String name,String email,String address,String phone) throws UsernameAlreadyExistsException,NoUpperCaseException,UncompletedFieldsException {
+    public static void addUser(String username,String password,String name,String email,String address,String phone) throws UsernameAlreadyExistsException,NoUpperCaseException, EmptyFieldsException {
         AllFieldsCompleted(username,password,name,email,address,phone);
         checkUserDoesNotAlreadyExist(username);
         UpperCaseExists(password);
@@ -69,7 +69,7 @@ public class UserService {
             return true;
 
     }
-    public static boolean AllFieldsCompleted(String username,String password,String name,String email,String address,String phone) throws UncompletedFieldsException
+    public static boolean AllFieldsCompleted(String username,String password,String name,String email,String address,String phone) throws EmptyFieldsException
     {
         Pattern pattern = Pattern.compile("[\\S+]");
         Matcher matcher1 = pattern.matcher(username);
@@ -84,12 +84,12 @@ public class UserService {
         boolean matchFound4 = matcher4.find();
         boolean matchFound5 = matcher5.find();
         boolean matchFound6 = matcher6.find();
-        if(!matchFound1 ) throw new UncompletedFieldsException("Your must complete all the fields!");
-        if(!matchFound2 ) throw new UncompletedFieldsException("Your must complete all the fields!");
-        if(!matchFound3 ) throw new UncompletedFieldsException("Your must complete all the fields!");
-        if(!matchFound4 ) throw new UncompletedFieldsException("Your must complete all the fields!");
-        if(!matchFound5 ) throw new UncompletedFieldsException("Your must complete all the fields!");
-        if(!matchFound6) throw new UncompletedFieldsException("Your must complete all the fields!");
+        if(!matchFound1 ) throw new EmptyFieldsException("Your must complete all the fields!");
+        if(!matchFound2 ) throw new EmptyFieldsException("Your must complete all the fields!");
+        if(!matchFound3 ) throw new EmptyFieldsException("Your must complete all the fields!");
+        if(!matchFound4 ) throw new EmptyFieldsException("Your must complete all the fields!");
+        if(!matchFound5 ) throw new EmptyFieldsException("Your must complete all the fields!");
+        if(!matchFound6) throw new EmptyFieldsException("Your must complete all the fields!");
 
         return true;
 
@@ -121,7 +121,7 @@ public class UserService {
         if(ok2==0)
             throw new IncorrectPasswordException("Introduced password is incorrect");
     }
-    public static void addAdmin(String username, String password,String name,String email,String address,String phone) throws UsernameAlreadyExistsException,NoUpperCaseException,UncompletedFieldsException
+    public static void addAdmin(String username, String password,String name,String email,String address,String phone) throws UsernameAlreadyExistsException,NoUpperCaseException, EmptyFieldsException
     {    AllFieldsCompleted(username,password,name,email,address,phone);
         checkUserDoesNotAlreadyExist(username);
         UpperCaseExists(password);

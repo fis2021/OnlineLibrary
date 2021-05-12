@@ -4,7 +4,7 @@ import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.Cursor;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.loose.fis.sre.exceptions.BookExistsException;
-import org.loose.fis.sre.exceptions.UncompletedFieldsException;
+import org.loose.fis.sre.exceptions.EmptyFieldsException;
 import org.loose.fis.sre.model.Book;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class BookService {
         bookRepository = database.getRepository(Book.class);
     }
 
-    public static void addBook(String titlu, String autor, String limba, String gen, String dom, String path, String description) throws  UncompletedFieldsException,BookExistsException {
+    public static void addBook(String titlu, String autor, String limba, String gen, String dom, String path, String description) throws EmptyFieldsException,BookExistsException {
         AllFieldsCompleted(titlu, autor, dom, description);
         checkBookDoesNotAlreadyExists(titlu, autor, limba);
         Book b = new Book(titlu, autor, limba, gen, dom, path, description);
@@ -81,7 +81,7 @@ public class BookService {
         }
     }
 
-    public static boolean AllFieldsCompleted(String titlu, String autor,String categorie,String descr) throws UncompletedFieldsException {
+    public static boolean AllFieldsCompleted(String titlu, String autor,String categorie,String descr) throws EmptyFieldsException {
         Pattern pattern = Pattern.compile("[\\S+]");
         Matcher matcher1 = pattern.matcher(titlu);
         Matcher matcher2 = pattern.matcher(autor);
@@ -91,10 +91,10 @@ public class BookService {
         boolean matchFound2 = matcher2.find();
         boolean matchFound4 = matcher3.find();
         boolean matchFound5 = matcher4.find();
-        if (!matchFound1) throw new UncompletedFieldsException("You must complete all the fields!");
-        if (!matchFound2) throw new UncompletedFieldsException("You must complete all the fields!");
-        if (!matchFound4) throw new UncompletedFieldsException("You must complete all the fields!");
-        if (!matchFound5) throw new UncompletedFieldsException("You must complete all the fields!");
+        if (!matchFound1) throw new EmptyFieldsException("You must complete all the fields!");
+        if (!matchFound2) throw new EmptyFieldsException("You must complete all the fields!");
+        if (!matchFound4) throw new EmptyFieldsException("You must complete all the fields!");
+        if (!matchFound5) throw new EmptyFieldsException("You must complete all the fields!");
 
 
         return true;

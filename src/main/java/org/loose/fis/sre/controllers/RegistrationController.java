@@ -37,7 +37,7 @@ public class RegistrationController {
             UserService.addUser(usernameField.getText(), passwordField.getText(),nameField.getText(),emailField.getText(),addressField.getText(),phoneField.getText());
             registrationMessage.setText("Account created successfully!");
             handleLogAction();
-        }catch(UncompletedFieldsException e){
+        }catch(EmptyFieldsException e){
             registrationMessage.setText(e.getMessage());
         }catch(UsernameAlreadyExistsException ee)
         {

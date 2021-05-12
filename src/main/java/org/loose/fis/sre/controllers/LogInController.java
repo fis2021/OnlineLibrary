@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.io.ObjectInputFilter;
 //import java.awt.*;
 
-public class LoginController {
+public class LogInController {
     @FXML
     private Label logMessage;
     @FXML

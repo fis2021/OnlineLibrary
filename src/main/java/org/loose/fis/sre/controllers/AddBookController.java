@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.loose.fis.sre.exceptions.BookExistsException;
-import org.loose.fis.sre.exceptions.UncompletedFieldsException;
+import org.loose.fis.sre.exceptions.EmptyFieldsException;
 import org.loose.fis.sre.services.BookService;
 
 import java.io.File;
@@ -68,7 +68,7 @@ public class AddBookController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         stocButton.setVisible(false);
-        LanguageBox.getItems().addAll("Română", "Engleză", "Franceză", "Germană");
+        LanguageBox.getItems().addAll("Română", "Engleză", "Franceză", "Rusă");
         literarBox.getItems().addAll("Epic","Liric","Dramatic");
 
 
@@ -90,7 +90,7 @@ public class AddBookController implements Initializable{
             scene.setMaxWidth(730);
 
         }
-        catch(UncompletedFieldsException e)
+        catch(EmptyFieldsException e)
         {
             bookMessage.setText(e.getMessage());
         }
