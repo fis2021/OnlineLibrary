@@ -1,7 +1,5 @@
 package org.loose.fis.sre.controllers;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,7 +14,7 @@ import javafx.stage.Stage;
 import org.loose.fis.sre.exceptions.BookExistsException;
 import org.loose.fis.sre.exceptions.UncompletedFieldsException;
 import org.loose.fis.sre.services.BookService;
-
+import javafx.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -30,22 +28,15 @@ public class AddBookController implements Initializable{
     @FXML
     private ImageView bookImage;
     @FXML
-    private ComboBox literarBox;
-    @FXML
     private TextField titluField;
     @FXML
     private TextField autorField;
     @FXML
-    private TextField domField;
-    @FXML
     private TextArea  descrArea;
+    @FXML
     private  Image fxImage;
     @FXML
     private Text bookMessage;
-    @FXML
-    private Text stocMessage;
-    @FXML
-    private Button stocButton;
 
     public void selectFileAction() {
 
@@ -59,26 +50,18 @@ public class AddBookController implements Initializable{
         File selectedFile = fileChooser.showOpenDialog(stage);
         fxImage = new Image(new File(selectedFile.getAbsolutePath()).toURI().toString());
         bookImage.setImage(fxImage);
-
-
-
     }
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        stocButton.setVisible(false);
         LanguageBox.getItems().addAll("Română", "Engleză", "Franceză", "Germană");
-        literarBox.getItems().addAll("Epic","Liric","Dramatic");
-
-
     }
     public void handleAddBook()
     {
         try
-        { BookService.addBook(titluField.getText(),autorField.getText(),(String) LanguageBox.getValue(),(String)literarBox.getValue(),domField.getText(),fxImage.getUrl(), descrArea.getText().replaceAll("\n", System.getProperty("line.separator")));
+        {
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("AddBook.fxml"));
+            BookService.addBook(titluField.getText(),autorField.getText(),(String) LanguageBox.getValue(),fxImage.getUrl(), descrArea.getText().replaceAll("\n", System.getProperty("line.separator")));
             bookMessage.setText("Carte adăugată cu succes!");
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("add_book.fxml"));
             Stage scene= (Stage) titluField.getScene().getWindow();
             scene.setTitle("Add Book");
             scene.setScene(new Scene(root,730,700));
@@ -94,20 +77,15 @@ public class AddBookController implements Initializable{
         {
             bookMessage.setText(e.getMessage());
         }
-        catch(BookExistsException e){
-            bookMessage.setText(e.getMessage());
-            stocMessage.setText("Vrei să mărești stocul acestei cărți?");
-            stocButton.setVisible(true);
-            stocButton.setOnAction(v-> {
-                BookService.increaseStoc(titluField.getText(),autorField.getText(),(String)LanguageBox.getValue());
-
-            });}
+        catch(BookExistsException e)
+        {
+            bookMessage.setText("The book could not be added");
+        }
         catch(NullPointerException e)
         {
             bookMessage.setText("You must complete all the fields!");
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

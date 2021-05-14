@@ -1,6 +1,2 @@
-package org.loose.fis.sre.model;
-
-public class ClickedBook {
-
-    public static Book selectedBook;
+package org.loose.fis.sre.model;public class ClickedBook {
 }

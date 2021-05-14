@@ -1,4 +1,4 @@
 package org.loose.fis.sre.controllers;
 
-public class ViewBookController {
+public class ClientController {
 }
