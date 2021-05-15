@@ -20,10 +20,7 @@ public class ViewBookController implements Initializable {
     private TextArea descArea;
     @FXML
     private Text lgText;
-    @FXML
-    private Text catText;
-    @FXML
-    private Text genText;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Image img=new Image(ClickedBook.selectedBook.getPhoto_path());
@@ -32,8 +29,5 @@ public class ViewBookController implements Initializable {
         descArea.setText(ClickedBook.selectedBook.getDescription());
         descArea.setEditable(false);
         lgText.setText(ClickedBook.selectedBook.getLimba());
-        catText.setText(ClickedBook.selectedBook.getDom_stiintific());
-        genText.setText(ClickedBook.selectedBook.getGen_literar());
-
     }
 }

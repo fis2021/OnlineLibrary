@@ -4,7 +4,9 @@ import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.Cursor;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.loose.fis.sre.exceptions.BookExistsException;
-import org.loose.fis.sre.exceptions.EmptyFieldsException;
+import org.loose.fis.sre.exceptions.UncompletedFieldsException;
+import org.loose.fis.sre.exceptions.UncompletedTitleException;
+import org.loose.fis.sre.exceptions.WrongFieldsException;
 import org.loose.fis.sre.model.Book;
 
 import java.util.ArrayList;
@@ -17,7 +19,6 @@ import static org.loose.fis.sre.services.FileSystemService.getPathToFile;
 public class BookService {
     public static ObjectRepository<Book> bookRepository;
 
-
     public static void initDatabase() {
 
         Nitrite database = Nitrite.builder()
@@ -27,16 +28,35 @@ public class BookService {
         bookRepository = database.getRepository(Book.class);
     }
 
-    public static void addBook(String titlu, String autor, String limba, String gen, String dom, String path, String description) throws EmptyFieldsException,BookExistsException {
-        AllFieldsCompleted(titlu, autor, dom, description);
+    public static void addBook(String titlu, String autor, String limba, String path, String description) throws  UncompletedFieldsException,BookExistsException {
+        AllFieldsCompleted(titlu, autor, path, description);
         checkBookDoesNotAlreadyExists(titlu, autor, limba);
-        Book b = new Book(titlu, autor, limba, gen, dom, path, description);
+        Book b = new Book(titlu, autor, limba, path, description);
         UUID u = b.getBook_id();
-        while (checkIDisUnic(u) == false) {
+        while (!checkIDisUnic(u)) {
             u = b.rando();
             checkIDisUnic(u);
         }
         bookRepository.insert(b);
+    }
+
+    public static void deleteBook(String titlu) throws UncompletedFieldsException, UncompletedTitleException
+    {
+        int sw=0;
+        Book aux=new Book();
+        if(titlu=="")
+            throw new UncompletedTitleException("Complete the title box");
+        for(Book book : bookRepository.find())
+        {
+            if(titlu.equals(book.getTitlu())) {
+                aux = book;
+                sw=1;
+            }
+        }
+        if(sw==0) {
+            throw new UncompletedFieldsException("Complete the empty fields");
+        }
+        bookRepository.remove(aux);
     }
 
     public static void checkBookDoesNotAlreadyExists(String titlu, String autor, String limba) throws BookExistsException {
@@ -48,7 +68,6 @@ public class BookService {
                         throw new BookExistsException("Cartea există deja în bibliotecă!");
                     }
                 }
-
             }
         }
     }
@@ -61,27 +80,9 @@ public class BookService {
             }
         }
         return true;
-
     }
 
-    public static void increaseStoc(String titlu, String autor, String limba) {
-        Cursor<Book> cursor = bookRepository.find();
-        for (Book book : cursor) {
-            if (titlu.equals(book.getTitlu())) {
-                if (autor.equals(book.getAutor())) {
-
-                    if (limba.equals(book.getLimba())) {
-                        book.increaseNrBook();
-                        bookRepository.update(book);
-
-                    }
-
-                }
-            }
-        }
-    }
-
-    public static boolean AllFieldsCompleted(String titlu, String autor,String categorie,String descr) throws EmptyFieldsException {
+    public static boolean AllFieldsCompleted(String titlu, String autor,String categorie,String descr) throws UncompletedFieldsException {
         Pattern pattern = Pattern.compile("[\\S+]");
         Matcher matcher1 = pattern.matcher(titlu);
         Matcher matcher2 = pattern.matcher(autor);
@@ -91,29 +92,17 @@ public class BookService {
         boolean matchFound2 = matcher2.find();
         boolean matchFound4 = matcher3.find();
         boolean matchFound5 = matcher4.find();
-        if (!matchFound1) throw new EmptyFieldsException("You must complete all the fields!");
-        if (!matchFound2) throw new EmptyFieldsException("You must complete all the fields!");
-        if (!matchFound4) throw new EmptyFieldsException("You must complete all the fields!");
-        if (!matchFound5) throw new EmptyFieldsException("You must complete all the fields!");
-
-
+        if (!matchFound1) throw new UncompletedFieldsException("You need to complete all the fields!");
+        if (!matchFound2) throw new UncompletedFieldsException("You need to complete all the fields!");
+        if (!matchFound4) throw new UncompletedFieldsException("You need to complete all the fields!");
+        if (!matchFound5) throw new UncompletedFieldsException("You need to complete all the fields!");
         return true;
 
 
     }
-    /* public static void deleteRecord() {
-         Cursor<Book> cursor = bookRepository.find();
-         int cnt=0;
-         for (Book book : cursor) {
-            if(book.getTitlu().equals("t"))
-            {
-                bookRepository.remove(book);
-            }
-         }
-     }*/
     public static ArrayList<Book> getLast() {
         Cursor<Book> cursor = bookRepository.find();
-        ArrayList<Book> a=new ArrayList<Book>();
+        ArrayList<Book> a=new ArrayList<>();
         int cnt = cursor.totalCount();
         int cnt2=0;
         for (Book book : cursor) {
@@ -132,6 +121,5 @@ public class BookService {
             }
         }
         return a;
-
     }
 }

@@ -13,74 +13,62 @@
 <?import javafx.scene.text.Text?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="491.0" prefWidth="725.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.loose.fis.sre.controllers.RegistrationController">
-    <left>
-        <AnchorPane prefHeight="400.0" prefWidth="253.0" style="-fx-background-color: #C0C0C0;" BorderPane.alignment="CENTER">
+    <center>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="490.0" prefWidth="725.0" stylesheets="@style.css" BorderPane.alignment="CENTER">
+        </AnchorPane>
+        <AnchorPane maxHeight="1900.0" maxWidth="1900.0" prefHeight="1900.0" prefWidth="1900.0" styleClass="right" stylesheets="@style.css" BorderPane.alignment="CENTER">
             <children>
-                <Text fx:id="borderView" layoutX="30.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Biblioteca Online" textAlignment="CENTER" wrappingWidth="236.1875">
+                <Text layoutX="220.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0"  style="-fx-highlight-text-fill: #FFFFFF" BorderPane.alignment="CENTER" text="Biblioteca Online">
                     <font>
-                        <Font name="Freestyle Script" size="36.0" />
+                        <Font name="Freestyle Script" size="70.0" />
                     </font>
                 </Text>
-                <ImageView fitHeight="119.0" fitWidth="298.0" layoutX="-1.0" layoutY="396.0" opacity="0.74" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-1.0">
-                    <image>
-                        <Image url="@images/border.jpg" />
-                    </image>
-                    <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                    </cursor>
-                </ImageView>
-                <ImageView fx:id="imageView" fitHeight="238.0" fitWidth="296.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@images/logo.jpg" />
+                <Text layoutX="460.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0"  style="-fx-highlight-text-fill: #FFFFFF" BorderPane.alignment="CENTER" text="Latest Book">
+                    <font>
+                        <Font name="Freestyle Script" size="40.0" />
+                    </font>
+                </Text>
+                <ImageView fitHeight="350.0" fitWidth="280.0" layoutX="380.0" layoutY="140.0">
+                    <image><![CDATA[
+            ]]><Image url="@images_book/book2.jpg" />
                     </image>
                 </ImageView>
-            </children>
-        </AnchorPane>
-    </left>
-    <center>
-        <AnchorPane maxHeight="502.0" maxWidth="424.0" prefHeight="502.0" prefWidth="424.0" styleClass="right" stylesheets="@style.css" BorderPane.alignment="CENTER">
-            <children>
-                <TextField fx:id="usernameField" layoutX="120.0" layoutY="69.0" promptText="Username" style="-fx-background-color: #DCDCDC; -fx-border-color: #000000;">
+                <TextField fx:id="usernameField" layoutX="100.0" layoutY="120.0" promptText="Username" style="-fx-background-color: #DCDCDC; -fx-border-color: #000000;">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </TextField>
-                <PasswordField fx:id="passwordField" layoutX="121.0" layoutY="109.0" promptText="Password" style="-fx-background-color: #DCDCDC; -fx-border-color: #000000;">
+                <PasswordField fx:id="passwordField" layoutX="100.0" layoutY="160.0" promptText="Password" style="-fx-background-color: #DCDCDC; -fx-border-color: #000000;">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </PasswordField>
-                <Button layoutX="170.0" layoutY="324.0" mnemonicParsing="false" onAction="#handleRegisterAction" text="Register" textAlignment="CENTER" textFill="#00000065">
+                <Button layoutX="150.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleRegisterAction" text="Register" textAlignment="CENTER" textFill="#00000065">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </Button>
-                <Text layoutX="152.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Register">
-                    <font>
-                        <Font name="System Bold Italic" size="16.0" />
-                    </font>
-                </Text>
-                <TextField fx:id="nameField" layoutX="121.0" layoutY="149.0" promptText="Name" style="-fx-background-color: #DCDCDC; -fx-border-color: #000000;">
+                <TextField fx:id="nameField" layoutX="100.0" layoutY="200.0" promptText="Name" style="-fx-background-color: #DCDCDC; -fx-border-color: #000000;">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </TextField>
-                <TextField fx:id="emailField" layoutX="120.0" layoutY="186.0" promptText="Email" style="-fx-background-color: #DCDCDC; -fx-border-color: #000000;">
+                <TextField fx:id="emailField" layoutX="100.0" layoutY="240.0" promptText="Email" style="-fx-background-color: #DCDCDC; -fx-border-color: #000000;">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </TextField>
-                <TextField fx:id="addressField" layoutX="120.0" layoutY="224.0" promptText="Address" style="-fx-background-color: #DCDCDC; -fx-border-color: #000000;">
+                <TextField fx:id="addressField" layoutX="100.0" layoutY="280.0" promptText="Address" style="-fx-background-color: #DCDCDC; -fx-border-color: #000000;">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </TextField>
-                <TextField fx:id="phoneField" layoutX="120.0" layoutY="268.0" promptText="Phone number" style="-fx-background-color: #DCDCDC; -fx-border-color: #000000;">
+                <TextField fx:id="phoneField" layoutX="100.0" layoutY="320.0" promptText="Phone number" style="-fx-background-color: #DCDCDC; -fx-border-color: #000000;">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </TextField>
-                <Text layoutX="84.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Already have an account?" textAlignment="CENTER" wrappingWidth="234.87535858154297">
+                <Text layoutX="70.0" layoutY="410.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Already have an account?" textAlignment="CENTER" wrappingWidth="234.87535858154297">
                     <font>
                         <Font name="System Bold" size="13.0" />
                     </font></Text>
@@ -88,7 +76,7 @@
                     <font>
                         <Font name="Broadway" size="13.0" />
                     </font></Label>
-                <Button fx:id="logButton" layoutX="169.0" layoutY="393.0" mnemonicParsing="false" onAction="#handleLogAction" prefHeight="26.0" prefWidth="64.0" text="Log in" textAlignment="CENTER" textFill="#00000065">
+                <Button fx:id="logButton" layoutX="150.0" layoutY="420.0" mnemonicParsing="false" onAction="#handleLogAction" prefHeight="26.0" prefWidth="64.0" text="Log in" textAlignment="CENTER" textFill="#00000065">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
