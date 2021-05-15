@@ -124,10 +124,10 @@ public class AdminController implements Initializable {
         Thread thread = new Thread(){
             public void run() {
                 String[] messages = new String[4];
-                messages[0] = "“So many books, so little time”";
-                messages[1] = "“A room without books is like a body without a soul”";
-                messages[2] = "“I have always imagined that Paradise will be a kind of library”";
-                messages[3] = "“There is no friend as loyal as a book”";
+                messages[0] = "“That’s the thing about books. They let you travel without moving your feet.”";
+                messages[1] = "“If you don’t like to read, you haven’t found the right book.”";
+                messages[2] = "“The library is inhabited by spirits that come out of the pages at night.”";
+                messages[3] = "“Books are good company, in sad times and happy times, for books are people – people who have managed to stay alive by hiding between the covers of a book.”";
                 Image[]img=new Image[3];
                 ArrayList<Book> a=getLast();
                 img[0]= new Image(a.get(0).getPhoto_path());
