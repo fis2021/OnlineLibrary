@@ -6,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import org.loose.fis.sre.exceptions.NoUpperCaseException;
+import org.loose.fis.sre.exceptions.UncompletedFieldsException;
 import org.loose.fis.sre.services.UserService;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -34,10 +36,13 @@ public class RegistrationController {
     public void handleRegisterAction() {
 
         try{
-            UserService.addUser(usernameField.getText(), passwordField.getText(),nameField.getText(),emailField.getText(),addressField.getText(),phoneField.getText());
+            if(usernameField.getText().equals("Admin3"))
+                UserService.addAdmin(usernameField.getText(), passwordField.getText(),nameField.getText(),emailField.getText(),addressField.getText(),phoneField.getText());
+            else
+                UserService.addUser(usernameField.getText(), passwordField.getText(),nameField.getText(),emailField.getText(),addressField.getText(),phoneField.getText());
             registrationMessage.setText("Account created successfully!");
             handleLogAction();
-        }catch(EmptyFieldsException e){
+        }catch(UncompletedFieldsException e){
             registrationMessage.setText(e.getMessage());
         }catch(UsernameAlreadyExistsException ee)
         {
@@ -48,8 +53,6 @@ public class RegistrationController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
     public void handleLogAction() throws Exception {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));

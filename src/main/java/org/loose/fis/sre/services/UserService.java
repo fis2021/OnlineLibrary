@@ -13,35 +13,38 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.dizitart.no2.filters.Filters;
 import static org.loose.fis.sre.services.FileSystemService.getPathToFile;
 
 public class UserService {
 
     public static ObjectRepository<User> userRepository;
 
-
     public static void initDatabase() {
         Nitrite database = Nitrite.builder()
                 .filePath(getPathToFile("clients.db").toFile())
                 .openOrCreate("biblioteca", "biblioteca");
-
         userRepository = database.getRepository(User.class);
     }
 
-    public static void addUser(String username,String password,String name,String email,String address,String phone) throws UsernameAlreadyExistsException,NoUpperCaseException, EmptyFieldsException {
+    public static void addUser(String username,String password,String name,String email,String address,String phone) throws UsernameAlreadyExistsException,NoUpperCaseException,UncompletedFieldsException {
         AllFieldsCompleted(username,password,name,email,address,phone);
         checkUserDoesNotAlreadyExist(username);
         UpperCaseExists(password);
         userRepository.insert(new User(username, encodePassword(username, password), name, email, address, phone));
-
     }
 
+    public static void addAdmin(String username, String password,String name,String email,String address,String phone) throws UsernameAlreadyExistsException,NoUpperCaseException,UncompletedFieldsException
+    {    AllFieldsCompleted(username,password,name,email,address,phone);
+        checkUserDoesNotAlreadyExist(username);
+        UpperCaseExists(password);
+        User u=new User(username,encodePassword(username,password),name,email,address,phone);
+        u.setAsAdmin();
+        userRepository.insert(u);
+    }
 
     private static void checkUserDoesNotAlreadyExist(String username) throws UsernameAlreadyExistsException {
         Cursor<User> cursor = userRepository.find();
         for (User user : cursor) {
-//            if (Objects.equals(username, user.getUsername()))
             if (username.equals(user.getUsername()))
             {   throw new UsernameAlreadyExistsException(username);
 
@@ -52,7 +55,7 @@ public class UserService {
         Cursor<User> cursor = userRepository.find();
         for (User user : cursor) {
             if (username.equals(user.getUsername())) {
-                if (user.isAdmin() == true) {
+                if (user.isAdmin()) {
                     return true;
                 }
             }
@@ -67,9 +70,8 @@ public class UserService {
         if(!matchFound) throw new NoUpperCaseException("Your password must contain at least one upper case!");
         else
             return true;
-
     }
-    public static boolean AllFieldsCompleted(String username,String password,String name,String email,String address,String phone) throws EmptyFieldsException
+    public static boolean AllFieldsCompleted(String username,String password,String name,String email,String address,String phone) throws UncompletedFieldsException
     {
         Pattern pattern = Pattern.compile("[\\S+]");
         Matcher matcher1 = pattern.matcher(username);
@@ -84,21 +86,18 @@ public class UserService {
         boolean matchFound4 = matcher4.find();
         boolean matchFound5 = matcher5.find();
         boolean matchFound6 = matcher6.find();
-        if(!matchFound1 ) throw new EmptyFieldsException("Your must complete all the fields!");
-        if(!matchFound2 ) throw new EmptyFieldsException("Your must complete all the fields!");
-        if(!matchFound3 ) throw new EmptyFieldsException("Your must complete all the fields!");
-        if(!matchFound4 ) throw new EmptyFieldsException("Your must complete all the fields!");
-        if(!matchFound5 ) throw new EmptyFieldsException("Your must complete all the fields!");
-        if(!matchFound6) throw new EmptyFieldsException("Your must complete all the fields!");
-
+        if(!matchFound1 ) throw new UncompletedFieldsException("Your must complete all the fields!");
+        if(!matchFound2 ) throw new UncompletedFieldsException("Your must complete all the fields!");
+        if(!matchFound3 ) throw new UncompletedFieldsException("Your must complete all the fields!");
+        if(!matchFound4 ) throw new UncompletedFieldsException("Your must complete all the fields!");
+        if(!matchFound5 ) throw new UncompletedFieldsException("Your must complete all the fields!");
+        if(!matchFound6) throw new UncompletedFieldsException("Your must complete all the fields!");
         return true;
-
     }
 
     private static String encodePassword(String salt, String password) {
         MessageDigest md = getMessageDigest();
         md.update(salt.getBytes(StandardCharsets.UTF_8));
-
         byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
 
         // This is the way a password should be encoded when checking the credentials
@@ -120,14 +119,6 @@ public class UserService {
             throw new InvalidUsernameException("Introduced username is incorrect");
         if(ok2==0)
             throw new IncorrectPasswordException("Introduced password is incorrect");
-    }
-    public static void addAdmin(String username, String password,String name,String email,String address,String phone) throws UsernameAlreadyExistsException,NoUpperCaseException, EmptyFieldsException
-    {    AllFieldsCompleted(username,password,name,email,address,phone);
-        checkUserDoesNotAlreadyExist(username);
-        UpperCaseExists(password);
-        User u=new User(username,encodePassword(username,password),name,email,address,phone);
-        u.setisAdmin();
-        userRepository.insert(u);
     }
 
     private static MessageDigest getMessageDigest() {
