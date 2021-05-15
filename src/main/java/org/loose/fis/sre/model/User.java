@@ -23,7 +23,7 @@ public class User {
         this.email=email;
         this.phone=phone;
     }
-    public void setisAdmin()
+    public void setAsAdmin()
     {
         this.admin=true;
     }
