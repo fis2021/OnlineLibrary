@@ -40,41 +40,21 @@ public class Book {
         return titlu;
     }
 
-    /*public void setTitlu(String titlu) {
-        this.titlu = titlu;
-    }*/
-
     public String getAutor() {
         return autor;
     }
-
-    /*public void setAutor(String autor) {
-        this.autor = autor;
-    }*/
 
     public String getLimba() {
         return limba;
     }
 
-    /*public void setLimba(String limba) {
-        this.limba = limba;
-    }*/
-
     public String getPhoto_path() {
         return photo_path;
     }
 
-    /*public void setPhoto_path(String photo_path) {
-        this.photo_path = photo_path;
-    }*/
-
     public String getDescription() {
         return description;
     }
-
-    /*public void setDescription(String description) {
-        this.description = description;
-    }*/
 
     @Override
     public boolean equals(Object o) {

@@ -37,7 +37,7 @@ public class LoginController {
         {
             UserService.userExists(usernameField.getText(),passwordField.getText());
             //logMessage.setText("Successful log in");
-            if(UserService.checkIsAdmin(usernameField.getText())==true)
+            if(UserService.checkIsAdmin(usernameField.getText()))
             {
                 Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("admin_main_page.fxml"));
                 Stage scene= (Stage) logButton.getScene().getWindow();
